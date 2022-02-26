@@ -2,7 +2,7 @@
 
 # Welcome to Robot Gladiators!
 
-> ## Game info:
+## Game info:
 >
 > Robot Gladiators is an MVP (*minimum viable product*)  JavaScript browser game in which the user pits their personal robot against our enemy robot gladiators! No fancy stuff! Pure textual robotic fighting!
 >
