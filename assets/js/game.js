@@ -19,19 +19,18 @@ var fight = function() {
         enemyHealth = enemyHealth - playerAttack;
         console.log(
             playerName + " attacked " + enemyName + "! " + enemyName + " now has " + enemyHealth + " health remaining."
-            );
+        );
         
         if (enemyHealth <= 0) {
             window.alert(enemyName + " has been defeated!");
-            }
-        else {
+        } else {
             window.alert(enemyName + " still has " + enemyHealth + " health left!");
-            }
+        }
 
         playerHealth = playerHealth - enemyAttack;
         console.log(
             "Ouch! " + enemyName + " hit " + playerName + " back! " + playerName + " now has " + playerHealth + " health remaining!"
-            );
+        );
 
         if (playerHealth <= 0) {
             window.alert(playerName + " has died!");
@@ -42,11 +41,12 @@ var fight = function() {
         var confirmSkip = window.confirm("Are you sure you'd like to quit?");
             // window.confirm stores user input as a variable (true/false)
         if (confirmSkip) {
-        window.alert(playerName + " has chosen to skip the fight! BOO!");
+            window.alert(playerName + " has chosen to skip the fight! BOO!");
             // create penalty for skipping, -2 to playerMoney
-        playerMoney = playerMoney - 2;  
-        window.alert("Too bad. You still owe the entry fee. You now have " + playerMoney + " currency left.");
-        } else {
+            playerMoney = playerMoney - 2;  
+            window.alert("Too bad. You still owe the entry fee. You now have " + playerMoney + " currency left.");
+        }
+        else {
             fight();
         }
     } else {
