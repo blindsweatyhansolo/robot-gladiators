@@ -6,6 +6,18 @@
 // "LOSE" - Player's health is zero or less
 //      * Game over
 
+var randomNumber = function(min, max) {
+        /* var value = Math.floor(Math.random() * 21) + 40;
+        * (Math.rand() * 21) = random number decimal between 0 and 20.xx, plus 40 to ensure that 40 is the minimum, 60 max
+        * Math.floor rounds the number down to avoid decimals 
+        * using [ var value = Math.floor(Math.random() * (max - min + 1) + min); ] allows us to set max and min parameters instead
+        * ex: function(40, 60) sets the min 40 and max 60
+        */
+       var value = Math.floor(Math.random() * (max - min + 1) + min);
+        // return statement creates a method that gives a string that can be stored in a variable to be called elsewhere, ALSO ends the function
+    return value;
+};
+
     // battle round (with enemyName as a parameter)
 var fight = function(enemy) {
 
@@ -22,7 +34,7 @@ var fight = function(enemy) {
                 // after confirming (yes/true), end loop (leave fight) and get penalty
             if (confirmSkip) {
                 window.alert(playerInfo.name + " has chosen to skip the fight! BOO!");
-                        // create penalty for skipping, -10 to playerInfo.money, ends fight loop for current opponent
+                    // create penalty for skipping, -10 to playerInfo.money, ends fight loop for current opponent
                 playerInfo.money = Math.max(0, playerInfo.money - 10);
                 /** Using Math.max(0, playerInfo.money - 10) ensures no negative values will be displayed because the minimum is set to 0
                  * can also be displayed with an if statement:
@@ -30,13 +42,13 @@ var fight = function(enemy) {
                  * playerInfo.money = 0;
                  * }
                  */
-                window.alert("Too bad. You still owe the entry fee. You now have " + playerInfo.money + " currency left.");
-                console.log("playerInfo.money", playerInfo.money);
+                window.alert("Too bad. You still owe the entry fee. You now have " + playerInfo.money + " dollars left.");
+                console.log("playerInfo.money", playerInfo.money)
                 break;
             }
         }
 
-            // player attacks
+            // player attacks with random damage value based on attack power
         var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
 
         enemy.health = Math.max(0, enemy.health - damage);
@@ -66,7 +78,7 @@ var fight = function(enemy) {
 
             // check PLAYER health, break while() loop if <= 0 (dead)
         if (playerInfo.health <= 0) {
-            window.alert(playerInfo.name + " has died!");
+            window.alert(playerInfo.name + " has died! RIP.");
             break;
                 // otherwise alert with player's remaining health, continue while() loop
         } else {
@@ -86,7 +98,7 @@ var startGame = function() {
                 // display current round, (i + 1) used since i = 0 and there is no Round 0
             window.alert("Welcome to Robot Gladiators! ROUND " + ( i + 1 ));
 
-                // pick new enemy based on the enemyNames array index
+                // pick new enemy based on the enemyInfo array index
             var pickedEnemyObj = enemyInfo[i];
 
                 // reset enemy health to random number between 40 (min) and 60 (max)
@@ -103,13 +115,14 @@ var startGame = function() {
                     shop();
                 }
             }
-        } else {
+        }
+        else {
                 // if playerInfo.health < 0 (dead), stop game
-            window.alert("You have lost your robot in battle! Game Over!");
+            window.alert("You have lost your robot in battle! Game Over, man!");
             break;
         }
     }
-    
+        // call endGame after loop ends
     endGame();
 };
 
@@ -120,7 +133,8 @@ var endGame = function() {
         // player wins if still alive
     if (playerInfo.health > 0) {
         window.alert("Great job, you survived the game! Your final score was " + playerInfo.money + "!");
-    } else {
+    }
+    else {
         window.alert("You've lost your robot in battle. RIP " + playerInfo.name);
     }
     
@@ -129,7 +143,8 @@ var endGame = function() {
     if (playAgainConfirm) {
             // restart game on confirm (yes/true)
         startGame();
-    } else {
+    }
+    else {
         window.alert("Thanks for playing Robot Gladiators! Come back soon!");
     }
 };
@@ -154,7 +169,7 @@ var shop = function() {
         
         case "LEAVE":
         case "leave":
-            window.alert("Leaving the store.");
+            window.alert("Thank you, come again!");
                 // function ends
             break;
 
@@ -166,17 +181,6 @@ var shop = function() {
     }
 };
 
-var randomNumber = function(min, max) {
-        /* var value = Math.floor(Math.random() * 21) + 40;
-        * (Math.rand() * 21) = random number decimal between 0 and 20.xx, plus 40 to ensure that 40 is the minimum, 60 max
-        * Math.floor rounds the number down to avoid decimals 
-        * using [ var value = Math.floor(Math.random() * (max - min + 1) + min); ] allows us to set max and min parameters instead
-        * ex: function(40, 60) sets the min 40 and max 60
-        */
-       var value = Math.floor(Math.random() * (max - min + 1) + min);
-        // return statement creates a method that gives a string that can be stored in a variable to be called elsewhere, ALSO ends the function
-    return value;
-};
 
     // player robot variables (OBJECT)
 var playerInfo = {
@@ -211,7 +215,7 @@ var playerInfo = {
     }
 };
 
-    // enemy robot variables
+    // enemy robot variables (OBJECT)
 var enemyInfo = [
     {
         name: "Roborto",
@@ -227,4 +231,10 @@ var enemyInfo = [
     }
 ];
 
+console.log(enemyInfo);
+console.log(enemyInfo[0]);
+console.log(enemyInfo[0].name);
+console.log(enemyInfo[0]["attack"]);
+
+// CALL THE GAME TO RUN!
 startGame();
