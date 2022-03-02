@@ -38,15 +38,23 @@ var fight = function(enemyName) {
             if (confirmSkip) {
                 window.alert(playerName + " has chosen to skip the fight! BOO!");
                         // create penalty for skipping, -10 to playerMoney, ends fight loop for current opponent
-                playerMoney = playerMoney - 10;
-                // window.alert("Too bad. You still owe the entry fee. You now have " + playerMoney + " currency left.");
+                playerMoney = Math.max(0, playerMoney - 10);
+                /** Using Math.max(0, playerMoney - 10) ensures no negative values will be displayed because the minimum is set to 0
+                 * can also be displayed with an if statement:
+                 * if (playerMoney < 0) {
+                 * playerMoney = 0;
+                 * }
+                 */
+                window.alert("Too bad. You still owe the entry fee. You now have " + playerMoney + " currency left.");
                 console.log("playerMoney", playerMoney);
                 break;
             }
         }
 
-            // player attacks, subtract player's attack from enemy's health
-        enemyHealth = enemyHealth - playerAttack;
+            // player attacks
+        var damage = randomNumber(playerAttack - 3, playerAttack);
+
+        enemyHealth = Math.max(0, enemyHealth - damage);
         console.log(
             playerName + " attacked " + enemyName + "! " + enemyName + " now has " + enemyHealth + " health remaining."
         );
@@ -63,8 +71,10 @@ var fight = function(enemyName) {
             window.alert(enemyName + " still has " + enemyHealth + " health left!");
         }
 
-            // enemy attacks, subtract enemy's attack from player's health
-        playerHealth = playerHealth - enemyAttack;
+            // enemy attacks
+        var damage = randomNumber(enemyAttack - 3, enemyAttack);
+
+        playerHealth = Math.max(0, playerHealth - damage);
         console.log(
             "Ouch! " + enemyName + " hit " + playerName + " back! " + playerName + " now has " + playerHealth + " health remaining!"
         );
@@ -96,8 +106,8 @@ var startGame = function() {
                 // pick new enemy based on the enemyNames array index
             var pickedEnemyName = enemyNames[i];
 
-                // reset enemy health before new fight
-            enemyHealth = 50;
+                // reset enemy health to random number between 40 (min) and 60 (max)
+            enemyHealth = randomNumber(40, 60);
             
                 // pass the pickedEnemyName variable into the fight function where it will assume the value of the enemyName parameter
             fight(pickedEnemyName);
@@ -187,6 +197,18 @@ var shop = function() {
             shop();
             break;
     }
+};
+
+var randomNumber = function(min, max) {
+        /* var value = Math.floor(Math.random() * 21) + 40;
+        * (Math.rand() * 21) = random number decimal between 0 and 20.xx, plus 40 to ensure that 40 is the minimum, 60 max
+        * Math.floor rounds the number down to avoid decimals 
+        * using [ var value = Math.floor(Math.random() * (max - min + 1) + min); ] allows us to set max and min parameters instead
+        * ex: function(40, 60) sets the min 40 and max 60
+        */
+       var value = Math.floor(Math.random() * (max - min + 1) + min);
+        // return statement creates a method that gives a string that can be stored in a variable to be called elsewhere, ALSO ends the function
+    return value;
 };
 
 startGame();
