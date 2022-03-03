@@ -178,9 +178,24 @@ var randomNumber = function(min, max) {
     return value;
 };
 
+var getPlayerName = function() {
+        // remember to initialize the var before the loop to guarantee entering loop at least once to run prompt
+    var name = "";
+
+    while(name === "" || name === null) {
+        name = window.prompt("What is your robot's name?");
+    }
+
+    console.log("Your robot's name is " + name);
+
+    return name;
+};
+
+
+
     // player robot variables (OBJECT)
 var playerInfo = {
-    name: window.prompt("What is your robot's name?"),
+    name: getPlayerName(),
     health: 100,
     attack: 10,
     money: 10,
