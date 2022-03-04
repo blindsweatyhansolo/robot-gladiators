@@ -6,36 +6,42 @@
 // "LOSE" - Player's health is zero or less
 //      * Game over
 
+var fightOrSkip = function() {
+        // ask player to fight or run
+    var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.");
+    
+        // conditional recursive function
+        // can also be written [[ if (!promptFight) ]]
+    if (promptFight === "" || promptFight === null) {
+        window.alert("You must enter a valid response. Try again.");
+        return fightOrSkip();
+    }
+
+    promptFight = promptFight.toLowerCase();
+
+    if (promptFight === "skip") {
+            // confirm player wants to skip
+        var confirmSkip = window.confirm("Are you sure you'd like to quit?");
+
+        if (confirmSkip) {
+            window.alert(playerInfo.name + " has chosen to skip the fight! BOO!");
+            window.alert("Too bad. You still owe the entry fee. You now have " + playerInfo.money + " dollars left.");
+            playerInfo.playerMoney = playerInfo.money - 10;
+            return true;
+        }
+    }
+}
+
+
     // battle round (with enemyName as a parameter)
 var fight = function(enemy) {
 
         // while loop to call and execute fight function only if the player's health is > 0 AND enemy's health > 0
     while(playerInfo.health > 0 && enemy.health > 0) {
-            // ask player to fight or run
-        var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.");
-        
-        // if choosing to SKIP fight
-        if (promptFight === "skip" || promptFight === "SKIP") {
-                // confirm player wants to skip
-            var confirmSkip = window.confirm("Are you sure you'd like to quit?");
-            
-                // after confirming (yes/true), end loop (leave fight) and get penalty
-            if (confirmSkip) {
-                window.alert(playerInfo.name + " has chosen to skip the fight! BOO!");
-                        // create penalty for skipping, -10 to playerInfo.money, ends fight loop for current opponent
-                playerInfo.money = Math.max(0, playerInfo.money - 10);
-                /** Using Math.max(0, playerInfo.money - 10) ensures no negative values will be displayed because the minimum is set to 0
-                 * can also be displayed with an if statement:
-                 * if (playerInfo.money < 0) {
-                 * playerInfo.money = 0;
-                 * }
-                 */
-                window.alert("Too bad. You still owe the entry fee. You now have " + playerInfo.money + " currency left.");
-                console.log("playerInfo.money", playerInfo.money);
-                break;
-            }
+        if (fightOrSkip()) {
+            break;
         }
-
+    
             // player attacks
         var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
 
@@ -190,7 +196,6 @@ var getPlayerName = function() {
 
     return name;
 };
-
 
 
     // player robot variables (OBJECT)
