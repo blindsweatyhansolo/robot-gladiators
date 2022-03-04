@@ -16,7 +16,7 @@ var fightOrSkip = function() {
         window.alert("You must enter a valid response. Try again.");
         return fightOrSkip();
     }
-
+        // .toLowerCase() changes input to always lowercase characters
     promptFight = promptFight.toLowerCase();
 
     if (promptFight === "skip") {
@@ -144,29 +144,23 @@ var endGame = function() {
 var shop = function() {
         // ask player what they want to do
     var shopOptionPrompt = window.prompt(
-        "Would you like to REFILL your health, UPGRADE your attack, or LEAVE the shop? Please enter one: 'REFILL', 'UPGRADE' or 'LEAVE' to make a choice."
+        "Would you like to REFILL your health, UPGRADE your attack, or LEAVE the shop? Please enter 1 for REFILL, 2 for UPGRADE or 3 for LEAVE."
     );
+        // parseInt() converts inputed string values to integers
+    shopOptionPrompt = parseInt(shopOptionPrompt);
 
     switch (shopOptionPrompt) {
-        case "REFILL":
-        case "refill":
+        case 1:
             playerInfo.refillHealth();
             break;
-
-        case "UPGRADE":
-        case "upgrade":
+        case 2:
             playerInfo.upgradeAttack();
             break;
-        
-        case "LEAVE":
-        case "leave":
-            window.alert("Leaving the store.");
-                // function ends
+        case 3:
+            window.alert("Thank you, come again!");
             break;
-
         default:
             window.alert("You did not pick a valid option. Try again.");
-                // call shop() again 
             shop();
             break;
     }
